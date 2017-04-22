@@ -6,24 +6,30 @@
     <meta name="description" content="Hello, World! - A-Frame">
     <script src="/aframe-assets/aframe-v0.5.0.js"></script>
     <script src="/aframe-assets/lib/aframe-animation-component.js"></script>
+
     <script src="components/velocity.js"></script>
     <script src="components/control-axis.js"></script>
-    <script src="components/writer.js"></script>
     <script src="components/sphere-collider.js"></script>
+    <script src="components/writer.js"></script>
     <script src="components/remover.js"></script>
+    <script src="components/spawner.js"></script>
   </head>
   <body>
-    <a-scene vr-mode-ui="enabled: false">
+    <a-scene id="scene" vr-mode-ui="enabled: false">
+      <a-assets>
+        <a-mixin id="spawn" material="color: blue" geometry="primitive: box"></a-mixin>
+      </a-assets>
       <a-entity camera>
         <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
       </a-entity>
-      <a-sphere control-axis="positive: a; negative: s; output: test;"
+      <a-sphere control-axis="positive: 83; negative: 65; output: test;"
                 writer="input: test; attribute: velocity; accessor: y"
                 sphere-collider
         velocity scale="1 1 1" position="0 2.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
       <a-plane
         sphere-collider="layer: hek;"
         remover="inputs: collided"
+        spawner="input: collided; mixin: spawn; parent: #scene;"
         position="0 -0.1 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
