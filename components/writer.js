@@ -10,7 +10,6 @@ AFRAME.registerComponent('writer', {
     }
   },
   write: function(e) {
-    console.log(e.detail);
     if (this.data.attribute != '') {
       if (this.data.accessor != '') {
         var original = this.el.getAttribute(this.data.attribute);
