@@ -5,7 +5,7 @@ AFRAME.registerComponent('sphere-collider', {
     radius: {type: 'number', default: 1},
     layer: {type: 'string'},
     collidesWith: {type: 'array'},
-    output: {type: 'string', default: 'collided'},
+    output: {type: 'string', default: 'sphere-collider'},
   },
   init: function () {
     this.system.registerMe(this.el);
