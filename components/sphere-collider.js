@@ -30,8 +30,8 @@ AFRAME.registerSystem('sphere-collider', {
       for (var j = 0; j < i; j++) {
         var a = this.spheres[i].getAttribute('sphere-collider');
         var b = this.spheres[j].getAttribute('sphere-collider');
-        a.position = this.spheres[i].getAttribute('position');
-        b.position = this.spheres[j].getAttribute('position');
+        a.position = this.spheres[i].object3D.getWorldPosition();
+        b.position = this.spheres[j].object3D.getWorldPosition();
 
         if (this.checkCollision(a, b)) {
           this.spheres[i].emit(a.output, {collidedWith: this.spheres[j]});
