@@ -17,7 +17,7 @@
   <body>
     <a-scene id="scene" vr-mode-ui="enabled: false">
       <a-assets>
-        <a-mixin id="spawn" material="color: blue" geometry="primitive: box"></a-mixin>
+        <a-mixin id="spawn" position="0 0 -2" material="color: blue" geometry="primitive: box"></a-mixin>
       </a-assets>
       <a-entity camera>
         <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
@@ -29,7 +29,7 @@
       <a-plane
         sphere-collider="layer: hek;"
         remover="inputs: collided"
-        spawner="input: collided; mixin: spawn; parent: #scene;"
+        spawner="input: collided; mixin: spawn;"
         position="0 -0.1 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
