@@ -40,6 +40,9 @@ AFRAME.registerComponent('spawner', {
     //    z: relativePosition.z + position.z,
     //  });
     //}
+  },
+  remove: function() {
+    this.el.removeEventListener(this.data.input, this.spawnFunction);
   }
 });
 
