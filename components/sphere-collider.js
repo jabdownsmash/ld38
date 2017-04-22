@@ -9,6 +9,9 @@ AFRAME.registerComponent('sphere-collider', {
   },
   init: function () {
     this.system.registerMe(this.el);
+  },
+  remove: function () {
+    this.system.unRegisterMe(this.el);
   }
 });
 
@@ -18,6 +21,9 @@ AFRAME.registerSystem('sphere-collider', {
   },
   registerMe: function (el) {
     this.spheres.push(el);
+  },
+  unRegisterMe: function (el) {
+    this.spheres.splice(this.spheres.indexOf(el), 1);
   },
   tick: function (t, dt) {
     for (var i = 1; i < this.spheres.length; i++) {

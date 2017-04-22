@@ -3,11 +3,12 @@ AFRAME.registerComponent('remover', {
     inputs: {type: 'array'},
   },
   init: function () {
+    this.removeFunction = this.doRemove.bind(this);
     for (var i = 0; i < this.data.inputs.length; i++) {
-      this.el.addEventListener(this.data.inputs[i], this.remove.bind(this));
+      this.el.addEventListener(this.data.inputs[i], this.removeFunction);
     }
   },
-  remove: function() {
+  doRemove: function() {
     this.el.parentNode.removeChild(this.el);
   }
 });
