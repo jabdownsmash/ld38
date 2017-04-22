@@ -19,7 +19,14 @@ AFRAME.registerComponent('spawner', {
     parent.appendChild(newElement);
     
     if (this.data.inPlace) {
-      newElement.setAttribute('position', this.el.getAttribute('position'));
+      //TODO: specify "world?"
+      var threePosition = this.el.object3D.getWorldPosition();
+      var position = {
+        x: threePosition.x,
+        y: threePosition.y,
+        z: threePosition.z,
+      };
+      newElement.setAttribute('position', position);
     }
 
     //TODO: relativePosition = null?
