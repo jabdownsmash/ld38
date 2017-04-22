@@ -9,6 +9,7 @@
     <script src="components/velocity.js"></script>
     <script src="components/control-axis.js"></script>
     <script src="components/writer.js"></script>
+    <script src="components/sphere-collider.js"></script>
   </head>
   <body>
     <a-scene vr-mode-ui="enabled: false">
@@ -18,7 +19,8 @@
       <a-sphere control-axis="positive: a; negative: s; output: test;"
                 writer="input: test; attribute: velocity; accessor: x"
         velocity scale="1 1 1" position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <a-plane sphere-collider="layer: hek;" position="0 -0.1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <a-plane sphere-collider="collidesWith: hek;" position="0 -1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
   </body>
