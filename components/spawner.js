@@ -3,7 +3,7 @@ AFRAME.registerComponent('spawner', {
     input:   {type: 'string'},
     mixin:   {type: 'string'},
     parent:  {type: 'selector'},
-    relative: {type: 'boolean'},
+    inPlace: {type: 'boolean'},
   },
   init: function() {
     this.spawnFunction = this.spawn.bind(this);
@@ -17,8 +17,12 @@ AFRAME.registerComponent('spawner', {
       parent = this.data.parent;
     }
     parent.appendChild(newElement);
+    
+    if (this.data.inPlace) {
+      newElement.setAttribute('position', this.el.getAttribute('position'));
+    }
 
-    // relativePosition = null?
+    //TODO: relativePosition = null?
     //if (this.data.relative) {
     //  var relativePosition = newElement.getAttribute('position');
     //  var position = this.el.getAttribute('position');
