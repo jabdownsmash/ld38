@@ -12,7 +12,8 @@ AFRAME.registerComponent('control-axis', {
 
     this.positiveHeld = 0;
     this.negativeHeld = 0;
-    this.oldValue = 0;
+    this.oldValue = -999;
+    this.checkValue();
   },
   keyDown: function(e) {
     if(e.keyCode == this.data.positive) {
