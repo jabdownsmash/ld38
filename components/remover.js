@@ -1,14 +1,17 @@
 AFRAME.registerComponent('remover', {
   schema: {
-    inputs: {type: 'array'},
+    input: {type: 'string'},
   },
   init: function () {
     this.removeFunction = this.doRemove.bind(this);
-    for (var i = 0; i < this.data.inputs.length; i++) {
-      this.el.addEventListener(this.data.inputs[i], this.removeFunction);
-    }
+    this.el.addEventListener(this.data.input, this.removeFunction);
   },
   doRemove: function() {
-    this.el.parentNode.removeChild(this.el);
+    if(this.el.parentNode) {
+      this.el.parentNode.removeChild(this.el);
+    }
+  },
+  remove: function() {
+    this.el.removeEventListener(this.data.input, this.removeFunction);
   }
 });
