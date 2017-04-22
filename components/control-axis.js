@@ -14,19 +14,19 @@ AFRAME.registerComponent('control-axis', {
     this.oldValue = 0;
   },
   keyDown: function(e) {
-    if(e.key == this.data.positive) {
+    if(e.keyCode == this.data.positive) {
       this.positiveHeld = 1;
     }
-    if(e.key == this.data.negative) {
+    if(e.keyCode == this.data.negative) {
       this.negativeHeld = -1;
     }
     this.checkValue();
   },
   keyUp: function(e) {
-    if(e.key == this.data.positive) {
+    if(e.keyCode == this.data.positive) {
       this.positiveHeld = 0;
     }
-    if(e.key == this.data.negative) {
+    if(e.keyCode == this.data.negative) {
       this.negativeHeld = 0;
     }
     this.checkValue();
