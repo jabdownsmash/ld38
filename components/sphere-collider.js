@@ -29,11 +29,9 @@ AFRAME.registerSystem('sphere-collider', {
 
         if (this.checkCollision(a, b)) {
           this.spheres[i].emit(a.output, {collidedWith: this.spheres[j]});
-          console.log("due?");
         }
         if (this.checkCollision(b, a)) {
           this.spheres[j].emit(b.output, {collidedWith: this.spheres[i]});
-          console.log("dude?");
         }
       }
     }
