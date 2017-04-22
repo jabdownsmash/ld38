@@ -13,7 +13,6 @@ AFRAME.registerComponent('writer', {
   write: function(e) {
     if (this.data.attribute != '') {
       if (this.data.accessor != '') {
-        console.log(e.detail.value);
         var original = this.el.getAttribute(this.data.attribute);
         original[this.data.accessor] = e.detail.value;
         this.el.setAttribute(this.data.attribute, original);
