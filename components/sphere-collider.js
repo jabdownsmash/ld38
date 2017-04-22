@@ -11,6 +11,7 @@ AFRAME.registerComponent('sphere-collider', {
     this.system.registerMe(this.el);
   },
   remove: function () {
+    console.log("does this happen?");
     this.system.unRegisterMe(this.el);
   }
 });
@@ -23,9 +24,21 @@ AFRAME.registerSystem('sphere-collider', {
     this.spheres.push(el);
   },
   unRegisterMe: function (el) {
+    console.log("does this happen?");
     this.spheres.splice(this.spheres.indexOf(el), 1);
   },
   tick: function (t, dt) {
+    //TODO: figure out why remove() doesn't work
+    var toRemove = [];
+    for (var i = 0; i < this.spheres.length; i++) {
+      if (this.spheres[i].parentNode == null) {
+        toRemove.unshift(i);
+      }
+    }
+    for (var i = 0; i < toRemove.length; i++) {
+      this.spheres.splice(toRemove[i],1);
+    }
+
     for (var i = 1; i < this.spheres.length; i++) {
       for (var j = 0; j < i; j++) {
         var a = this.spheres[i].getAttribute('sphere-collider');
@@ -58,8 +71,9 @@ AFRAME.registerSystem('sphere-collider', {
       var dx = a.position.x - b.position.x;
       var dy = a.position.y - b.position.y;
       var dz = a.position.z - b.position.z;
-      var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-      return (dist < a.radius + b.radius);
+      var sqDist = (dx * dx + dy * dy + dz * dz);
+      var radius = a.radius + b.radius;
+      return (sqDist < radius * radius);
     }
     return false;
   }
