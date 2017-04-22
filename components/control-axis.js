@@ -1,4 +1,5 @@
 AFRAME.registerComponent('control-axis', {
+  multiple: true,
   schema: {
     positive: { type: 'string' },
     negative: { type: 'string' },

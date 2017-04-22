@@ -1,4 +1,5 @@
 AFRAME.registerComponent('writer', {
+  multiple: true,
   schema: {
     input: { type: 'string' },
     attribute: { type: 'string' },
