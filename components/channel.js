@@ -1,4 +1,5 @@
 AFRAME.registerComponent('channel', {
+  multiple: true,
   schema: {
     channel: {type: 'string'},
     input: {type: 'string'},
