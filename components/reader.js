@@ -1,4 +1,5 @@
 AFRAME.registerComponent('reader', {
+  multiple: true,
   schema: {
     input: {type: 'string'},
     output: {type: 'string'},
