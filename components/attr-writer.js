@@ -1,6 +1,7 @@
 AFRAME.registerComponent('attr-writer', {
   schema: {
     attribute: {type: 'string'},
+    property: {type: 'string'},
     value: {type: 'string'},
     input: {type: 'string'}
   },
@@ -9,7 +10,11 @@ AFRAME.registerComponent('attr-writer', {
     this.el.addEventListener(this.data.input, this.inputFunction);
   },
   input: function() {
-    console.log(this.data.attribute, this.data.value);
-    this.el.setAttribute(this.data.attribute, this.data.value);
+    if(this.data.property == '') {
+      this.el.setAttribute(this.data.attribute, this.data.value);
+    }
+    else {
+      this.el.setAttribute(this.data.attribute, this.data.property, this.data.value);
+    }
   }
 });
