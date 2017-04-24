@@ -2,8 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>ward it</title>
-    <meta name="description" content="Hello, World! - A-Frame">
+    <title>untitled 23-04-17</title>
+    <meta name="description" content="ld38">
     <script src="/aframe-assets/aframe-v0.5.0.js"></script>
     <script src="/aframe-assets/lib/aframe-animation-component.js"></script>
 
@@ -13,25 +13,168 @@
     <script src="components/writer.js"></script>
     <script src="components/remover.js"></script>
     <script src="components/spawner.js"></script>
+    <script src="components/thetavel.js"></script>
+    <script src="components/timer.js"></script>
+    <script src="components/math.js"></script>
+    <script src="components/channel.js"></script>
+    <script src="components/attr-writer.js"></script>
+    <script src="components/reader.js"></script>
+    <script src="components/ld38/resource.js"></script>
+    <script src="components/logger.js"></script>
   </head>
   <body>
+    <audio src="/aframe-assets/sounds/ld38-song.mp3" style="display:none;" autoplay loop></audio>
     <a-scene id="scene" vr-mode-ui="enabled: false">
       <a-assets>
-        <a-mixin id="spawn" position="0 0 -2" material="color: blue" geometry="primitive: box"></a-mixin>
+        <a-mixin id="enemy"
+          velocity="-2.4 0 0"
+          sphere-collider="radius: .3; layer: enemy; collidesWith: player"
+          remover="input: sphere-collider"
+          scale=".3 .3 .3" material="color: #FFC65D" geometry="primitive: box"></a-mixin>
+        <a-mixin id="spawner" timer="tickRate: 3" spawner="parent: #scene;input: timer; inPlace: true; mixin: enemy;"></a-mixin>
+        <a-mixin id="starwars" velocity channel="channel: channel; output: channel" attr-writer="input: channel; attribute: velocity; property: y; value: .7"></a-mixin>
+
+        <a-mixin id="cameraTween"
+          animation="property: rotation; to: 0 -60 0; dur: 500"
+          animation__yoyo="property: position; to: 0 1.4 -4; delay: 600; dir: alternate; dur: 5000; loop: true"
+          thetavel="0 0 0"
+          ></a-mixin>
       </a-assets>
-      <a-entity camera>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-entity position="0 1 -4"
+                channel="channel: channel; output: channel"
+                attr-writer='input: channel; attribute: mixin; value: cameraTween'
+          >
+        <a-entity position="0 0 4">
+          <a-entity camera rotation="0 0 0">
+            <a-entity scale=".1 .1 .1" position="0 -.7 -1">
+              <a-box position=".6 0 0" channel="channel: channel; output: channel"
+                writer="input: math; attribute: resource; accessor: value"
+                math="input: reader; operation: -; value: .2; output: math"
+                reader="input: timer; output: reader; attribute: resource; property: value"
+                timer="tickRate: 0"
+                resource="value: 10; output: resource"
+                writer__1="input: resource; attribute: scale; accessor: x"
+                reader__1="input: collectible; output: collectible2; attribute: resource; property: value"
+                math__1="input: collectible2; operation: +; value: .90; output: collectible3"
+                writer__2="input: collectible3; attribute: resource; accessor: value"
+                channel__1="channel: collectible; output: collectible"
+                attr-writer='input: channel; attribute: timer; property: tickRate; value: 5'
+                >
+              </a-box>
+              <a-text velocity channel="channel: channel; output: channel" attr-writer="input: channel; attribute: velocity; property: y; value: 1"
+position="0 11 0" align="center" scale="5 5 10" value='untitled 23-04-17'></a-text>
+              <a-text velocity channel="channel: channel; output: channel" attr-writer="input: channel; attribute: velocity; property: y; value: 1"
+position="0 9 0" align="center" scale="5 5 10" value='a game by aaron santiago'></a-text>
+              <a-text velocity channel="channel: channel; output: channel" attr-writer="input: channel; attribute: velocity; property: y; value: 1"
+position="0 7 0" align="center" scale="4 4 10" value='controls: arrow keys. instructions: collect yellow boxes to keep the bar at the bottom from running out.'></a-text>
+              <a-text mixin="starwars" width="1" position="0 -5 0" align="center" scale="30 30 10" value='my world'></a-text>
+              <a-text mixin="starwars" width="1" position="0 -7 0" align="center" scale="30 30 10" value='a prose by aaron santiago'></a-text>
+              <a-text mixin="starwars" width="1" position="0 -10 0" align="center" scale="20 20 10" value='welcome to, quite possibly, the worst game i have ever made. enjoy your stay.'></a-text>
+              <a-text mixin="starwars" width="1" position="0 -15 0" align="center" scale="20 20 10" value="the best i can do is ensure that you have something to read for as long as you're around."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -20 0" align="center" scale="20 20 10" value="have you ever noticed that tropicana tastes nothing like orange juice? because orange juice stored in vats becomes nearly tasteless, they synthesize flavors out of oranges to create 'good' tasting orange juice out of 100% oranges."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -30 0" align="center" scale="20 20 10" value="super smash bros. melee is quite possibly one of the best games ever made. elegant in that it is immediately fun and endlessly deep, i can't allow any other game to take its throne. i have played the game for many, many, years now, and it has provided a way in which to synthesize experience at large in a format that clearly states its goals."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -40 0" align="center" scale="20 20 10" value="other publications by this author: Buttons and Scissors is NP Complete. New Perspectives on Interactivity. Beyond the Halting Problem: Higher Order Infinite Loop Checkers. Opka.io. the motion: series. "></a-text>
+              <a-text mixin="starwars" width="1" position="0 -50 0" align="center" scale="20 20 10" value="contemporary life is so tiresome. there is too much stimulation and not enough ways to deal with the stress of it all. xanax is a pretty good solution, though you can only get so much mileage out of that before the irs or the feds come knocking at your door. pity the hippie revolution didn't stick, they had a cool ideology."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -60 0" align="center" scale="20 20 10" value="list of things that are ideology: laptops. phones. social media websites. restaurants. doors. fences. furniture. wristwatches. air conditioners. keyboards. among others."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -70 0" align="center" scale="20 20 10" value="a quote from cheez it grooves sharp white cheddar box (unknown artist): you could kick it with the pros! at mls tm all-star 2017 mls cheez it official snack of major league soccer cut out goal fold here"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -80 0" align="center" scale="20 20 10" value="list of things that are on my floor: pajama pants. underarmour tm brand copyright thermals. a nintendo brand tm all rights reserved wii tm copyright. a pair of nike brand tm official copyright killshot tm 2 tm (made by association with j crew tm brand copyright). a backpack. an empty bottle of honest brand tm organic tea. a bag filled with cables."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -90 0" align="center" scale="20 20 10" value="understanding the role of family as a child is probably one of the greater conflicts a person can ever undergo. it is so tumultuous, that well before people have made any headway in this excursion, they often find themselves with a couple children of their own, just to make sense of it all. it doesn't work, however."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -100 0" align="center" scale="20 20 10" value="disclaimer: going any further is creepy. why are you so interested in what i have to say that you continue to labor for it?"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -110 0" align="center" scale="20 20 10" value="i suppose i might as well reward you for coming this far. here are some links to secret jabdownsmash.com content: meshtest beats hek pic nirvesha motion-d. quality is not guaranteed, and i take no responsibility for any damage or losses incurred by these websites."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -120 0" align="center" scale="20 20 10" value="the philosophy of art is wholly overcomplicated. it used to be that there was one metric for value in this field: beauty. where has that gone? has aesthetics gone too far? no, probably not, actually. beauty is a pretty poor metric by which to base the totality of art philosophy. i guess it's just gonna have to suck forever."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -130 0" align="center" scale="20 20 10" value="if, at any point, you find yourself asking: aaron why did you make the game like this? well, it turns out, programming is one of the least fun things to ever exist. but this game had nothing in the way of content or fun, so i had to come up with something. writing these is pretty fun so it's a decent solution. not as good as xanax."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -140 0" align="center" scale="20 20 10" value="list of things that consumers need to wake up about in games: level design is the antithesis of interactivity. 'art games'. the game industry's main problem is that it treats its employees like whores. all game designers are divas, they just don't have the money to act like them."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -150 0" align="center" scale="20 20 10" value="list of things people don't realize control their entire lives: reddit youtube tumblr twitter facebook google apple microsoft yahoo aol time warner spectrum comcast t mobile verizon luxotica porsche grey poupon pepsi coca cola general mills. just to name a few."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -160 0" align="center" scale="20 20 10" value="disclaimer: i made no claims about quality so don't come crying to me when you get this far and realize you wasted all of the time it took. sorry not sorry."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -170 0" align="center" scale="20 20 10" value="i used to like league of legends a lot. so much so, i created an autohotkey utility for toggling quick cast back before all the new settings ui was implemented, indulgent reddit post and all. reddit now makes me want to kill myself, so things have changed, to say the least."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -180 0" align="center" scale="20 20 10" value="nowadays there is an endless struggle between my desire to avoid all of the negative thoughts racing around at cern levels of speed in my lil noggin and my desire to not repress every single little thought that comes into my head. i'm losing this battle."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -190 0" align="center" scale="20 20 10" value="yesterday i looked into the mirror and thought 'wow i am really normal' is this how people are supposed to feel??"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -200 0" align="center" scale="20 20 10" value="a quote from joeun aatchim (present self): i believe that each of my works has a unique biorhythm. thus, to keep the symbiotic relationship between me and my works helathy, i try to be the partner, not the master, of my works."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -210 0" align="center" scale="20 20 10" value="is there a word for when something is said and you know the meaning of it but you don't believe it? and a word for when you finally start believing it? true love is probably the easiest example of this. there are a lot of those, and i want to fast forward to the part where i believe them all. right now i don't feel wise enough to be happy."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -220 0" align="center" scale="20 20 10" value="a text mixin starwars width 1 position 0 40 0 align center scale 20 20 10 value a text mixin starwars width 1 position 0 40 0 align center scale 20 20 10 value a text mixin starwars width 1 position 0 40 0 align center scale 20 20 10 value a text mixin starwars width 1 position 0 40 0 align center scale 20 20 1 value..."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -230 0" align="center" scale="20 20 10" value="'how about this' 'no that would straight up cook my balls' 'but it looks pretty steez' 'yeah thats true it would go with my kick ass sweater too' 'rip my balls' 'ok do i get to wear my killshots tm brand tm today' 'no its gonna rain fuck' 'fuck consumerism anyway' 'yeah!' 'fuck yeah' 'ok which backpack' 'clearly the grey one the other '"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -240 0" align="center" scale="20 20 10" value="amazingly this is nowhere near the longest body of text i have written in one sitting. even as a programmer, you'd be surprised what kinda bullshit they make me go through in liberal arts school. spoiler: underage drinking, sex, and a lot of both feeling totally worthless and being insanely pretentious. i still feel the effects of both."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -250 0" align="center" scale="20 20 10" value="the longer you sit here and read this, the more guarantee there is of my having not seen what happens if you play the game this long, though i will admit, i'm impressed you've even made it this far."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -260 0" align="center" scale="20 20 10" value="the tedium of having to keep the bar alive at the bottom must be stacking up so quickly, you might as well stop. but you can trust me when i say i won't let you run out of text, so consume as you please."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -270 0" align="center" scale="20 20 10" value="is it weird that my favorite voice is all lowercase with minimal punctuation otherwise? if i could control newlines i would almost never use any punctuation at all. what does this voice sound like, i wonder. my second favorite voice is to use two exclamation points by themselves. it's like how the prettiest girls have normal faces because you can project your own desires onto them. !!"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -280 0" align="center" scale="20 20 10" value="i am writing this while absolutely d r e a d i n g editing the y offsets on each of these. it's gonna be annoying."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -290 0" align="center" scale="20 20 10" value="health is such a busted topic, people really need to understand this before being allowed to walk outside their front door. the human biology is so insanely complicated that the millenia we spent building up industry that allowed us to go to the moon and put computers in our microwaves we still don't know if floss is beneficial for our dental health."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -300 0" align="center" scale="20 20 10" value="hi i'd like to order two pizzas, one of which i'd like to deliver straight into the nearest trash can? yeah i'm trying to lose weight. can i get one with hawaiian on half and vegan cheese on the other half, and one with a smiley face made of pepperonis? not too happy though. when you trash the vegan cheese pizza please recycle the box, thanks."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -310 0" align="center" scale="20 20 10" value="i spend all weekend in bed toiling away...for what? this game? this game sucks. it's a really bad minigame with a ton of self indulgent writing scrolling by at the same time. this is a worse collaboration than bad blood tm brand tm by taylor swift copyright and kung fu kenny tm registered trademark"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -320 0" align="center" scale="20 20 10" value="if you came all this way because you knew that the words would eventually run out: guess what?? you're right. they do eventually run out. the idea was to write so much that i covered my bases and every possible loser out there who could want to hit the end of this godforsaken wasteland would eventually need to fap. but i can't fill 5 minutes anyway."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -330 0" align="center" scale="20 20 10" value="i initially thought that the longer this list got, the more okay i would be with divulging some secrets or talking openly about my feelings. all that has really happened is i have gotten snarkier and wittier as i better understand the limitations of this medium. also more pretentious."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -340 0" align="center" scale="20 20 10" value="a quote from twenty-three (iu): 난 수수께끼 (Question) 뭐게요 맞혀봐요"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -350 0" align="center" scale="20 20 10" value="ads are the single most complex and staggering constructions of all time. there is no single person who understands the entire stack, and only very few who know what all the parts are. think about it this way: some the biggest companies in the world make almost all their money from ads: facebook, google, etc."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -360 0" align="center" scale="20 20 10" value="art and business should be kept seperate. the philosophy of business is much too self deprecating to compromise the philosophy of art. of course, many will fantasize about enjoying their business, but it is simply not possible. when it comes to money, nothing is more important than money. your happiness has a price, and it's 2 weeks of vacation a year."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -370 0" align="center" scale="20 20 10" value="i find that i am constantly wrong about everything. non stop. i am afraid of opening my mouth lest i carve away another possible form of the truth with my words. i do it anyway though, because i need to speak words to get things from people behind countertops once i'm through waiting in line, among other things."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -380 0" align="center" scale="20 20 10" value="honestly, i am growing tired of making games. i suppose if that were really true, i would stop entirely, but i haven't continued with much excitement. eventually one day i might come to have an opinion of it."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -390 0" align="center" scale="20 20 10" value="i think that i don't read enough books. a real shame, i suppose. i think the issue is that reading is really hard. they don't tell you this in school but the type of reading you do while growing up is not the same kind of reading you have to do up in grown-up world. you have to focus out here. kids are usually so smart that focusing doesn't matter though."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -400 0" align="center" scale="20 20 10" value="this collection of tweets are brought to you by 'i dont use twitter so don't judge me if i make jokes that are overdone on short form social media'.com tm brand games! my publisher and lifetime friends, couldn't do it without them."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -410 0" align="center" scale="20 20 10" value="all people stress me out, i think. who are they? what do they want? what do i want? oh god, do they want something from me? what if i don't have it? who am i anyway? i don't know what i don't have! how could i possibly know that they want it if i don't have it?! etc."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -420 0" align="center" scale="20 20 10" value="when i did the initial playtesting for this game, i thought i was finished writing snippets. i found that they were actually too entertaining, so i had to write more, in case someone happened to be as good as i am at collecting boxes at a slightly distressed perspective, which i suppose you are. nice job."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -430 0" align="center" scale="20 20 10" value="boy, it must feel really bad to come all this way and lose on accident. that's the game though, i guess. want to keep reading? don't lose."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -440 0" align="center" scale="20 20 10" value="confession: the earlier snippet about tropicana is because i am drinking out of a half gallon of orange juice right now. it's close to being empty but not quite. i actually rather love tropicana, though it bums me out that the flavor is not really what oranges taste like."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -450 0" align="center" scale="20 20 10" value="confession: each one of these snippets represents me running out of ideas. i am scouring my brain and this room for more, and it was only until this last snippet that i decided it had been long enough since mentioning orange juice that i could mention it again."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -460 0" align="center" scale="20 20 10" value="i predict that the ultimate downfall of my ego will be when i admit that family is all one has. i am 7 years into a search to disprove that idea, but i am as of yet fruitless. i sometimes wonder if my father was a vagabond like i am now, but then i remember that, even if he was, i am fantasizing it anyway. i can't possibly be like him in any non-biological way. who am i kidding though, we don't even know if flossing helps our health??"></a-text>
+              <a-text mixin="starwars" width="1" position="0 -470 0" align="center" scale="20 20 10" value="i think 'cloud' services should be treated with a lot of wariness, in the same way gambling is. it's fine in moderation and if you understand all the machinations in place to suck you in, but otherwise it's a way to outsource the destruction of your environment and absolutely destroy your privacy. most people aren't okay with socialism, so i don't know why they are okay with fascism with corporations at the helm instead."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -480 0" align="center" scale="20 20 10" value="it's unfortunate that moore's law has stopped keeping up, or rather, we as humans have begun cannabalizing ourselves at such an incredible rate that it has bled through into our most advanced of industrial pursuits. now we pump out engineers by the truckload in bootcamps. does anybody wonder why software is bad? i bet the consumer service representatives in thailand and the philippines wonder. or do they? they have a job."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -490 0" align="center" scale="20 20 10" value="if hipsters have taught us anything, it's that discriminating against a set of people is a piece in the puzzle towards yourself conforming into an identity. hipsters hate hipsters. how beatiful a form it is that so many of the hipster traits are self focused. self-loathing, self-love, self-fantasization."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -500 0" align="center" scale="20 20 10" value="list of things on my windowsill: a disconnected usb extender for one of my vr cameras. a torn paper bag holding pieces for my homemade greenscreen. a box containing loose change. a mug containing miscellaneous art supplies. three acrylic paints. two souvenirs won at pax east, a crocheted boxing duck and a statuette of a buff gentleman with a top hat. three lighters."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -510 0" align="center" scale="20 20 10" value="i currently use 2 really tall chairs as makeshift desks and sidetables. it's quite handy, but i'm not sure if it makes my room look like it is a room for a dwarf, or at least someone who is really strange. i don't think i'm so cool as to be described as really strange though. i'm too normal."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -520 0" align="center" scale="20 20 10" value="this isn't my most experimental work, believe it or not. i do rather like this one though, how do you feel about it? probably pretty good if you're here this long. my humor has gotten quite a bit weaker since i started writing these though, so i might stop soon."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -530 0" align="center" scale="20 20 10" value="i don't like playing games."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -540 0" align="center" scale="20 20 10" value="i don't like to talk to people in one on one situations. it's too hard to process. when there are three people, at least it is easier to assume i can outprocess the other two, so i am more comfortable. i can systematically alienate one or the other person in conversation, making them so uncomfortable that it is socially acceptible to keep those interactions very brief."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -550 0" align="center" scale="20 20 10" value="i don't like the idea of a family. parents give up very much for their children, but it's so selfish. don't they want a child in return? who asked me if that's okay? i mean, i don't know if i want to be a child or not, and that's the problem. or it's at least one of my problems. perhaps i have too much time to think about my problems, and that is my problem, or one of them."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -560 0" align="center" scale="20 20 10" value="i hope i can keep making games like this one. i hate making things for other people. what do they want, anyway? because i don't have it so i don't know what they want."></a-text>
+              <a-text mixin="starwars" width="1" position="0 -570 0" align="center" scale="20 20 10" value="congratulations, you made it to the very end. woo. !! tm brand tm"></a-text>
+            </a-entity>
+          </a-entity>
+        </a-entity>
       </a-entity>
-      <a-sphere control-axis="positive: 83; negative: 65; output: test;"
-                writer="input: test; attribute: velocity; accessor: y"
-                sphere-collider
-        velocity scale="1 1 1" position="0 2.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-plane
-        sphere-collider="layer: hek;"
-        remover="inputs: collided"
-        spawner="input: collided; mixin: spawn; in-place: true;"
-        position="0 -0.1 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+      <a-entity id="player"
+                control-axis="positive: 39; negative: 37; scale: 1; output: horiz1;"
+                control-axis__1="positive: 38; negative: 40; scale: 1; output: vert1;"
+                math__1="input: vert1; operation: *; value: 5; output: vert2" 
+                writer="input: vert2; attribute: velocity; accessor: y"
+                math__3="input: horiz1; operation: *; value: 6; output: horiz2" 
+                writer__1="input: horiz2; attribute: velocity; accessor: z"
+                velocity thetavel="0 100 0"
+                scale=".6 .6 .6" position="0 0 -3">
+        <a-box sphere-collider="layer: player; collidesWith: enemy; radius: .4;"
+               channel="channel: collectible; input: sphere-collider"
+               position="0 1.25 0" color="#14DEAD" thetavel="450 100 0">
+        </a-box>
+      </a-entity>
+      <a-entity position="0 1.5 -3"
+             sphere-collider="radius:.3; layer: player"
+             remover="input: channel"
+             channel="channel: channel; input: sphere-collider; output: channel"
+             spawner="parent: #spawnerHolder; input: sphere-collider; mixin: spawner">
+      </a-entity>
+      <a-entity position="0 0 -3"
+             sphere-collider="radius:.3; layer: player"
+             remover="input: channel"
+             channel="channel: channel; input: sphere-collider; output: channel"
+             spawner="parent: #spawnerHolder; input: sphere-collider; mixin: spawner">
+      </a-entity>
+      <a-entity position="0 .5 -4"
+             sphere-collider="radius:.3; layer: player"
+             remover="input: channel"
+             channel="channel: channel; input: sphere-collider; output: channel"
+             spawner="parent: #spawnerHolder; input: sphere-collider; mixin: spawner">
+      </a-entity> 
+      <a-entity position="0 .5 -2"
+             sphere-collider="radius:.3; layer: player"
+             remover="input: channel"
+             channel="channel: channel; input: sphere-collider; output: channel"
+             spawner="parent: #spawnerHolder; input: sphere-collider; mixin: spawner">
+      </a-entity> 
+      <a-entity thetavel="600 0 0" position="5 1.25 -3">
+        <a-entity id="spawnerHolder" thetavel="600 0 0" position="0 2 0">
+        </a-entity>
+      </a-entity>
+      <a-entity sphere-collider="radius:5; layer:player;" position="-12 1.25 -3"></a-entity>
+      <a-sky color="#343434"></a-sky>
     </a-scene>
   </body>
 </html>
